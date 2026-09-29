@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+void display(Node* head)
+{
+    if (head == NULL)
+        return;
+
+    Node* p = head;
+
+    do
+    {
+        cout << p->data << " ";
+        p = p->next;
+    }
+    while (p != head);
+}
+
+void deleteEvenPositions(Node*& head)
+{
+    if (head == NULL)
+        return;
+
+    Node* p = head;
+
+    // If only one node exists
+    if (p->next == p)
+        return;
+
+    while (p->next != head)
+    {
+        Node* temp = p->next;
+
+        // Delete even-position node
+        p->next = temp->next;
+
+        // If deleting last node
+        if (temp->next == head)
+        {
+            delete temp;
+            break;
+        }
+
+        delete temp;
+
+        // Move to next odd-position node
+        p = p->next;
+    }
+}
+
+int main()
+{
+    Node* head = NULL;
+    Node* last = NULL;
+
+    int n, data;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> data;
+
+        Node* p = new Node;
+        p->data = data;
+
+        if (head == NULL)
+        {
+            head = p;
+            last = p;
+            p->next = head;
+        }
+        else
+        {
+            p->next = head;
+            last->next = p;
+            last = p;
+        }
+    }
+
+    cout << "Original List: ";
+    display(head);
+
+    deleteEvenPositions(head);
+
+    cout << "\nAfter deleting even positioned nodes: ";
+    display(head);
+
+    return 0;
+}
