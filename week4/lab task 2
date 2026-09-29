@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+int josephus(Node* head, int k)
+{
+    if (head == NULL)
+        return -1;
+
+    Node* p = head;
+    Node* prev = NULL;
+
+    // Find last node
+    prev = head;
+
+    while (prev->next != head)
+    {
+        prev = prev->next;
+    }
+
+    while (p->next != p)
+    {
+        // Move k-1 times
+        for (int i = 1; i < k; i++)
+        {
+            prev = p;
+            p = p->next;
+        }
+
+        cout << "Deleted: " << p->data << endl;
+
+        prev->next = p->next;
+
+        Node* temp = p;
+        p = p->next;
+
+        delete temp;
+    }
+
+    return p->data;
+}
+
+int main()
+{
+    Node* head = NULL;
+    Node* last = NULL;
+
+    int n, k;
+
+    cout << "Enter number of people: ";
+    cin >> n;
+
+    for (int i = 1; i <= n; i++)
+    {
+        Node* p = new Node;
+
+        p->data = i;
+
+        if (head == NULL)
+        {
+            head = p;
+            last = p;
+            p->next = head;
+        }
+        else
+        {
+            p->next = head;
+            last->next = p;
+            last = p;
+        }
+    }
+
+    cout << "Enter k: ";
+    cin >> k;
+
+    int survivor = josephus(head, k);
+
+    cout << "Survivor: " << survivor;
+
+    return 0;
+}
