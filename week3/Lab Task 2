@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    node* next;
+};
+
+node* swapNodes(node* head, int x, int y)
+{
+    if (x == y)
+        return head;
+
+    node* prevX = NULL;
+    node* currX = head;
+
+    while (currX != NULL && currX->data != x)
+    {
+        prevX = currX;
+        currX = currX->next;
+    }
+
+    node* prevY = NULL;
+    node* currY = head;
+
+    while (currY != NULL && currY->data != y)
+    {
+        prevY = currY;
+        currY = currY->next;
+    }
+
+    // If any value is not found
+    if (currX == NULL || currY == NULL)
+    {
+        cout << "One or both values not found." << endl;
+        return head;
+    }
+
+    // Connect previous node of X
+    if (prevX != NULL)
+        prevX->next = currY;
+    else
+        head = currY;
+
+    // Connect previous node of Y
+    if (prevY != NULL)
+        prevY->next = currX;
+    else
+        head = currX;
+
+    // Swap next pointers
+    node* temp = currX->next;
+    currX->next = currY->next;
+    currY->next = temp;
+
+    return head;
+}
+
+void display(node* head)
+{
+    node* current = head;
+
+    while (current != NULL)
+    {
+        cout << current->data << " ";
+        current = current->next;
+    }
+}
+
+int main()
+{
+    node* head = new node{10, NULL};
+
+    head->next = new node{20, NULL};
+    head->next->next = new node{30, NULL};
+    head->next->next->next = new node{40, NULL};
+
+    cout << "Original List: ";
+    display(head);
+
+    int x, y;
+
+    cout << "\nEnter first value: ";
+    cin >> x;
+
+    cout << "Enter second value: ";
+    cin >> y;
+
+    head = swapNodes(head, x, y);
+
+    cout << "After swapping nodes: ";
+    display(head);
+
+    return 0;
+}
