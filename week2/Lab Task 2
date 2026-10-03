@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    node* next;
+};
+
+node* mergeLists(node* head1, node* head2)
+{
+    node* head3 = NULL;
+    node* tail = NULL;
+
+    while (head1 != NULL)
+    {
+        node* newNode = new node;
+        newNode->data = head1->data;
+        newNode->next = NULL;
+
+        if (head3 == NULL)
+        {
+            head3 = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+
+        head1 = head1->next;
+    }
+
+    while (head2 != NULL)
+    {
+        node* newNode = new node;
+        newNode->data = head2->data;
+        newNode->next = NULL;
+
+        if (head3 == NULL)
+        {
+            head3 = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+
+        head2 = head2->next;
+    }
+
+    return head3;
+}
