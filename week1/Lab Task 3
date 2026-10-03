@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int arr[100];
+    int size;
+    int value;
+
+    cout << "Enter size of Array List: ";
+    cin >> size;
+
+    cout << "Enter values: ";
+
+    for (int i = 0; i < size; i++)
+    {
+        cin >> arr[i];
+    }
+
+    cout << "Enter value to search: ";
+    cin >> value;
+
+    int i = 0;
+    bool found = false;
+
+    while (i < size)
+    {
+        if (arr[i] == value)
+        {
+            cout << "Value found at index " << i << endl;
+            found = true;
+            break;
+        }
+
+        i++;
+    }
+
+    if (found == false)
+    {
+        cout << "Value not found." << endl;
+    }
+
+    return 0;
+}
