@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    node* next;
+};
+
+void findOccurrences(node* head, int value)
+{
+    node* current = head;
+    int position = 1;
+    bool found = false;
+
+    while (current != NULL)
+    {
+        if (current->data == value)
+        {
+            cout << "Value found at position "
+                 << position << endl;
+
+            found = true;
+        }
+
+        current = current->next;
+        position++;
+    }
+
+    if (found == false)
+    {
+        cout << "Value not found." << endl;
+    }
+}
