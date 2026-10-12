@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+// Node structure for linked queue
+struct Node {
+    int data;
+    Node* next;
+};
+
+class Queue {
+    Node* front;   // pointer to front node
+    Node* rear;    // pointer to rear node
+public:
+    Queue() {
+        front = rear = NULL;   // initially empty
+    }
+
+    bool is_empty() {
+        return (front == NULL);
+    }
+
+    void enqueue(int x) {
+        Node* temp = new Node;
+        temp->data = x;
+        temp->next = NULL;
+
+        if (is_empty()) {
+            front = rear = temp;   // first node
+        } else {
+            rear->next = temp;     // link new node at end
+            rear = temp;           // update rear
+        }
+        cout << "Enqueued: " << x << endl;
+    }
+
+    int dequeue() {
+        if (is_empty()) {
+            cout << "Queue is empty, cannot dequeue!" << endl;
+            return -1;
+        }
+        Node* temp = front;
+        int x = temp->data;
+        front = front->next;       // move front forward
+        if (front == NULL) rear = NULL; // queue became empty
+        delete temp;
+        cout << "Dequeued: " << x << endl;
+        return x;
+    }
+
+    void display() {
+        if (is_empty()) {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        Node* temp = front;
+        cout << "Queue elements: ";
+        while (temp != NULL) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+
+// Test in main
+int main() {
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.display();
+
+    q.dequeue();
+    q.display();
+
+    return 0;
+}
