@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+
+// Preorder (NRL)
+void preorderNRL(Node* root) {
+    if(root != NULL) {
+        cout << root->data << " ";
+        preorderNRL(root->right);
+        preorderNRL(root->left);
+    }
+}
+
+// Inorder (RNL)
+void inorderRNL(Node* root) {
+    if(root != NULL) {
+        inorderRNL(root->right);
+        cout << root->data << " ";
+        inorderRNL(root->left);
+    }
+}
+
+// Postorder (RLN)
+void postorderRLN(Node* root) {
+    if(root != NULL) {
+        postorderRLN(root->right);
+        postorderRLN(root->left);
+        cout << root->data << " ";
+    }
+}
+
+int main() {
+    Node* root = new Node(50);
+    root->left = new Node(30);
+    root->right = new Node(70);
+    root->left->left = new Node(20);
+    root->left->right = new Node(40);
+    root->right->left = new Node(60);
+    root->right->right = new Node(80);
+
+    cout << "Preorder (NRL): ";
+    preorderNRL(root);
+
+    cout << "\nInorder (RNL): ";
+    inorderRNL(root);
+
+    cout << "\nPostorder (RLN): ";
+    postorderRLN(root);
+
+    cout << endl;   // ✅ final line fixed
+
+    return 0;       // ✅ proper return statement
+}
